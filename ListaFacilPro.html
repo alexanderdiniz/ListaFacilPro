@@ -1,0 +1,2175 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <title>Lista Fácil - Organize suas compras</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Paleta de cores fornecida - com destaque em cinza escuro */
+            --color1: #fea304; /* Laranja - usado como cor de destaque */
+            --color1-dark: #d48800; /* Versão mais escura para contraste */
+            --color2: #909320; /* Verde oliva - cor secundária */
+            --color2-dark: #6d7518; /* Versão mais escura */
+            --color3: #125a44; /* Verde escuro */
+            --color3-light: #1a7c5f; /* Versão mais clara */
+            --color4: #37192c; /* Roxo vinho */
+            --color4-light: #4d2438; /* Versão mais clara */
+            --color5: #220315; /* Vinho muito escuro - quase preto */
+            
+            /* Cores de cinza escuro para fundos */
+            --gray-dark-1: #1a1a1a; /* Cinza muito escuro - fundo principal */
+            --gray-dark-2: #2d2d2d; /* Cinza escuro - cards e containers */
+            --gray-dark-3: #3d3d3d; /* Cinza médio - elementos destacados */
+            --gray-dark-4: #4a4a4a; /* Cinza claro - bordas e elementos secundários */
+            
+            /* Cores de texto para contraste */
+            --text-on-dark: #f5f5f5; /* Texto claro sobre fundos escuros */
+            --text-muted-dark: #b0b0b0; /* Texto secundário sobre escuro */
+            --text-on-light: #333333; /* Texto escuro sobre fundos claros */
+            --text-muted-light: #666666; /* Texto secundário sobre claro */
+            
+            /* Cores de fundo otimizadas com cinza escuro */
+            --bg-light-primary: #f8f9fa;
+            --bg-light-secondary: #e9ecef;
+            --bg-dark-primary: var(--gray-dark-1); /* Fundo principal escuro */
+            --bg-dark-secondary: var(--gray-dark-2); /* Fundo secundário escuro */
+            
+            /* Cores para campos de entrada - CORRIGIDAS PARA MELHOR CONTRASTE */
+            --input-bg-dark: #2a2a2a; /* Fundo mais claro para inputs */
+            --input-bg-light: #ffffff; /* Fundo branco para inputs no tema claro */
+            --input-text-dark: #ffffff; /* Texto BRANCO em inputs escuros (corrigido) */
+            --input-text-light: #222222; /* Texto escuro em inputs claros */
+            --input-border-dark: #666666; /* Bordas mais visíveis */
+            --input-border-light: #aaaaaa; /* Bordas no tema claro */
+            
+            /* Placeholder colors corrigidos */
+            --placeholder-dark: #cccccc;
+            --placeholder-light: #666666;
+            
+            /* Gradientes com contraste otimizado */
+            --gradient-primary: linear-gradient(135deg, var(--color1), var(--color1-dark));
+            --gradient-secondary: linear-gradient(135deg, var(--color2), var(--color2-dark));
+            --gradient-dark: linear-gradient(135deg, var(--gray-dark-2), var(--gray-dark-3));
+            --gradient-accent: linear-gradient(135deg, var(--color1), var(--color2));
+            
+            /* Tema claro - OTIMIZADO PARA CONTRASTE (CORRIGIDO) */
+            --bg-main-light: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            --bg-card-light: #ffffff; /* Branco puro para melhor contraste */
+            --text-main-light: #222222; /* Texto mais escuro */
+            --text-muted-light: #666666;
+            --border-light: #dddddd; /* Bordas mais claras */
+            --shadow-light: 0 6px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover-light: 0 10px 30px rgba(254, 163, 4, 0.15);
+            
+            /* Tema escuro - com cinza escuro */
+            --bg-main-dark: linear-gradient(135deg, var(--gray-dark-1) 0%, #121212 100%);
+            --bg-card-dark: var(--gray-dark-2);
+            --text-main-dark: var(--text-on-dark);
+            --text-muted-dark: var(--text-muted-dark);
+            --border-dark: var(--gray-dark-4);
+            --shadow-dark: 0 6px 20px rgba(0, 0, 0, 0.3);
+            --shadow-hover-dark: 0 10px 30px rgba(0, 0, 0, 0.4);
+            
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+            
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        html[data-theme="light"] {
+            --bg-main: var(--bg-main-light);
+            --bg-card: var(--bg-card-light);
+            --text-main: var(--text-main-light);
+            --text-muted: var(--text-muted-light);
+            --border: var(--border-light);
+            --shadow: var(--shadow-light);
+            --shadow-hover: var(--shadow-hover-light);
+            --input-bg: var(--input-bg-light);
+            --input-text: var(--input-text-light);
+            --input-border: var(--input-border-light);
+            --placeholder-color: var(--placeholder-light);
+            
+            /* CORES ESPECÍFICAS PARA TEMA CLARO - CORRIGIDAS */
+            --gray-light-1: #f5f5f5; /* Fundo claro para lista */
+            --gray-light-2: #eeeeee; /* Fundo claro secundário */
+            --gray-light-3: #e0e0e0; /* Elementos destacados */
+            --gray-light-4: #cccccc; /* Bordas */
+        }
+
+        html[data-theme="dark"] {
+            --bg-main: var(--bg-main-dark);
+            --bg-card: var(--bg-card-dark);
+            --text-main: var(--text-main-dark);
+            --text-muted: var(--text-muted-dark);
+            --border: var(--border-dark);
+            --shadow: var(--shadow-dark);
+            --shadow-hover: var(--shadow-hover-dark);
+            --input-bg: var(--input-bg-dark);
+            --input-text: var(--input-text-dark);
+            --input-border: var(--input-border-dark);
+            --placeholder-color: var(--placeholder-dark);
+            
+            /* CORES ESPECÍFICAS PARA TEMA ESCURO */
+            --gray-light-1: var(--gray-dark-1);
+            --gray-light-2: var(--gray-dark-2);
+            --gray-light-3: var(--gray-dark-3);
+            --gray-light-4: var(--gray-dark-4);
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: var(--bg-main);
+            color: var(--text-main);
+            transition: var(--transition);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .app {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modal de confirmação personalizado */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transform: translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(254, 163, 4, 0.4);
+        }
+
+        .modal-title {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .modal-content {
+            margin-bottom: 30px;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--text-main);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            border: 1px solid;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .modal-btn-cancel {
+            background: var(--gray-light-3);
+            color: var(--text-muted);
+            border-color: var(--gray-light-4);
+        }
+
+        .modal-btn-cancel:hover {
+            background: var(--gray-light-4);
+            border-color: var(--color1);
+            color: var(--color1);
+        }
+
+        .modal-btn-confirm {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--color1);
+            box-shadow: 0 4px 12px rgba(254, 163, 4, 0.3);
+        }
+
+        .modal-btn-confirm:hover {
+            background: var(--color1-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(254, 163, 4, 0.4);
+        }
+
+        .modal-btn-danger {
+            background: linear-gradient(135deg, #a83232, #5a1212);
+            color: white;
+            border-color: #a83232;
+            box-shadow: 0 4px 12px rgba(168, 50, 50, 0.3);
+        }
+
+        .modal-btn-danger:hover {
+            background: #c03939;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 50, 50, 0.4);
+        }
+
+        /* Modal de entrada personalizado - CORRIGIDO */
+        .modal-input-group {
+            margin-bottom: 20px;
+        }
+
+        .modal-input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--input-border);
+            background: var(--input-bg) !important;
+            color: var(--input-text) !important;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--color1);
+            box-shadow: 0 0 0 3px rgba(254, 163, 4, 0.3);
+            background: var(--input-bg) !important;
+            color: var(--input-text) !important;
+        }
+
+        /* CORREÇÃO PARA PLACEHOLDER DO MODAL INPUT */
+        .modal-input::placeholder {
+            color: var(--placeholder-color);
+            opacity: 0.9;
+        }
+
+        /* Estilos para o aplicativo principal */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-3px);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .header-title {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(254, 163, 4, 0.4);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .theme-toggle {
+            width: 50px;
+            height: 26px;
+            border-radius: 50px;
+            background: var(--gray-light-3);
+            border: 1px solid var(--gray-light-4);
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            padding: 0 4px;
+        }
+
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--color1);
+            left: 4px;
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        html[data-theme="dark"] .theme-toggle::after {
+            left: calc(100% - 22px);
+            background: var(--color2);
+        }
+
+        .theme-icon {
+            font-size: 0.8rem;
+            z-index: 1;
+        }
+
+        .theme-icon.sun {
+            color: var(--color1);
+            margin-right: auto;
+        }
+
+        .theme-icon.moon {
+            color: var(--color2);
+            margin-left: auto;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 16px;
+            padding: 20px;
+            background: rgba(40, 40, 40, 0.1);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        html[data-theme="light"] .form {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        html[data-theme="dark"] .form {
+            background: rgba(40, 40, 40, 0.3);
+        }
+
+        .form:hover {
+            background: rgba(40, 40, 40, 0.2);
+        }
+
+        html[data-theme="light"] .form:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        html[data-theme="dark"] .form:hover {
+            background: rgba(40, 40, 40, 0.4);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        label {
+            font-size: 0.8rem;
+            color: var(--text-main);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color1);
+            font-size: 0.9rem;
+        }
+
+        /* ==================== */
+        /* CAMPOS DE ENTRADA CORRIGIDOS - CONTRASTE FIXO */
+        /* ==================== */
+        
+        input[type="text"],
+        input[type="number"],
+        select {
+            padding: 12px 12px 12px 38px;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--input-border) !important;
+            outline: none;
+            background: var(--input-bg) !important;
+            color: var(--input-text) !important;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            width: 100%;
+            font-weight: 500;
+        }
+
+        /* Placeholder com contraste adequado */
+        input[type="text"]::placeholder,
+        input[type="number"]::placeholder,
+        select::placeholder {
+            color: var(--placeholder-color) !important;
+            opacity: 0.9;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            border-color: var(--color1) !important;
+            box-shadow: 0 0 0 3px rgba(254, 163, 4, 0.3) !important;
+            background: var(--input-bg) !important;
+            color: var(--input-text) !important;
+        }
+
+        /* Seletor de ordenação - contraste corrigido */
+        #ordenacao {
+            background-color: var(--input-bg) !important;
+            color: var(--input-text) !important;
+            border: 2px solid var(--input-border) !important;
+        }
+
+        #ordenacao option {
+            background-color: var(--bg-card) !important;
+            color: var(--text-main) !important;
+        }
+
+        #ordenacao:focus {
+            border-color: var(--color1) !important;
+            box-shadow: 0 0 0 3px rgba(254, 163, 4, 0.3) !important;
+        }
+
+        #btn-adicionar {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 5px;
+            box-shadow: 0 4px 15px rgba(254, 163, 4, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        #btn-adicionar:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(254, 163, 4, 0.4);
+        }
+
+        #btn-adicionar:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .lista-container {
+            margin-top: 24px;
+        }
+
+        .lista-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .lista-header h2 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-main);
+        }
+
+        .filtros {
+            display: flex;
+            gap: 6px;
+            background: var(--gray-light-1);
+            padding: 5px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+
+        .chip-filtro {
+            border-radius: var(--radius-sm);
+            padding: 8px 14px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .chip-filtro.ativo {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--color1);
+            box-shadow: 0 4px 8px rgba(254, 163, 4, 0.2);
+        }
+
+        .ordenacao-container {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        #ordenacao {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fea304' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+            padding-right: 45px;
+            border: 2px solid var(--input-border);
+            background-color: var(--input-bg);
+            color: var(--input-text);
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .lista {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            max-height: 55vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--color1) var(--gray-light-1);
+        }
+
+        .lista::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .lista::-webkit-scrollbar-track {
+            background: var(--gray-light-1);
+            border-radius: 10px;
+        }
+
+        .lista::-webkit-scrollbar-thumb {
+            background: var(--color1);
+            border-radius: 10px;
+        }
+
+        .lista::-webkit-scrollbar-thumb:hover {
+            background: var(--color1-dark);
+        }
+
+        .lista-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            background: var(--gray-light-1);
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+            transition: var(--transition);
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .lista-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--color1);
+            background: var(--gray-light-3);
+        }
+
+        .lista-item.comprado {
+            background: rgba(18, 90, 68, 0.15);
+            border-color: var(--color3);
+        }
+
+        html[data-theme="light"] .lista-item.comprado {
+            background: rgba(18, 90, 68, 0.08);
+        }
+
+        .item-esquerda {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .item-checkbox {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            border: 1px solid var(--color1);
+            background: var(--gray-light-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .lista-item.comprado .item-checkbox {
+            background: var(--color3);
+            border-color: var(--color3);
+        }
+
+        .item-checkbox i {
+            color: white;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .lista-item.comprado .item-checkbox i {
+            opacity: 1;
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .item-nome {
+            font-weight: 600;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-main);
+        }
+
+        .lista-item.comprado .item-nome {
+            text-decoration: line-through;
+            color: var(--color3);
+        }
+
+        .item-detalhes {
+            display: flex;
+            gap: 10px;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid;
+        }
+
+        .badge-quantidade {
+            background: rgba(254, 163, 4, 0.15);
+            color: var(--color1);
+            border-color: rgba(254, 163, 4, 0.3);
+        }
+
+        .badge-preco {
+            background: rgba(144, 147, 32, 0.15);
+            color: var(--color2);
+            border-color: rgba(144, 147, 32, 0.3);
+        }
+
+        .item-direita {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-acao {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .btn-acao:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-editar {
+            background: var(--color1);
+            border-color: var(--color1);
+        }
+
+        .btn-toggle {
+            background: var(--color3);
+            border-color: var(--color3);
+        }
+
+        .btn-remover {
+            background: #a83232;
+            border-color: #a83232;
+        }
+
+        .mensagem-vazia {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .mensagem-vazia i {
+            font-size: 2.5rem;
+            color: var(--color1);
+            opacity: 0.5;
+        }
+
+        .rodape {
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .rodape-linha {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .resumo-info {
+            color: var(--text-main);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .acoes-resumo {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-texto {
+            background: transparent;
+            border: 1px dashed var(--border);
+            color: var(--text-main);
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-texto:hover {
+            background: var(--gray-light-3);
+            border-style: solid;
+            border-color: var(--color1);
+        }
+
+        .total-container {
+            background: var(--gray-light-1);
+            padding: 18px;
+            border-radius: var(--radius-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--color1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .total-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+
+        .btn-total {
+            background: var(--color1);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(254, 163, 4, 0.3);
+        }
+
+        .btn-total:hover {
+            background: #ffb630;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(254, 163, 4, 0.4);
+        }
+
+        .texto-total {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--color1);
+        }
+
+        .importacao {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--border);
+        }
+
+        .importacao label {
+            font-size: 0.8rem;
+            color: var(--text-main);
+        }
+
+        .file-input-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            flex: 1;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-display {
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px dashed var(--border);
+            background: var(--gray-light-1);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .file-input-wrapper:hover .file-input-display {
+            border-color: var(--color1);
+            background: var(--gray-light-2);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--gradient-primary);
+            color: white;
+            padding: 14px 24px;
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            font-weight: 700;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            max-width: 90%;
+            text-align: center;
+            border: 1px solid rgba(254, 163, 4, 0.3);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Controles de acessibilidade */
+        .accessibility-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .accessibility-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gray-light-3);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+
+        .accessibility-btn:hover {
+            transform: scale(1.1);
+            background: var(--color1);
+            color: white;
+            border-color: var(--color1);
+        }
+
+        .high-contrast-mode {
+            --color1: #ff9900;
+            --color1-dark: #cc7a00;
+            --color2: #99cc00;
+            --color2-dark: #7aa300;
+            --color3: #006633;
+            --color3-light: #008844;
+            --color4: #660033;
+            --color4-light: #880044;
+            
+            --gray-dark-1: #000000;
+            --gray-dark-2: #222222;
+            --gray-dark-3: #444444;
+            --gray-dark-4: #666666;
+            
+            --text-on-dark: #ffffff;
+            --text-muted-dark: #cccccc;
+            --text-on-light: #000000;
+            --text-muted-light: #666666;
+            
+            --bg-light-primary: #ffffff;
+            --bg-light-secondary: #f0f0f0;
+            --bg-dark-primary: var(--gray-dark-1);
+            --bg-dark-secondary: var(--gray-dark-2);
+            
+            --input-bg-dark: #333333;
+            --input-bg-light: #ffffff;
+            --input-text-dark: #ffffff;
+            --input-text-light: #000000;
+            --input-border-dark: #666666;
+            --input-border-light: #000000;
+            
+            --placeholder-color: #cccccc;
+            
+            --gray-light-1: #000000;
+            --gray-light-2: #222222;
+            --gray-light-3: #444444;
+            --gray-light-4: #666666;
+        }
+
+        @media (max-width: 500px) {
+            .app {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .item-direita {
+                flex-direction: column;
+            }
+            
+            .btn-acao {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .accessibility-controls {
+                bottom: 10px;
+                right: 10px;
+                flex-direction: column;
+            }
+            
+            .modal {
+                padding: 20px;
+                max-width: 100%;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            .modal-btn {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            body {
+                background: #ffffff !important;
+            }
+            
+            .app {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .card {
+                box-shadow: none;
+                border: 1px solid #000;
+                background: white !important;
+            }
+            
+            .header,
+            .form,
+            .ordenacao-container,
+            .acoes-resumo,
+            .importacao,
+            .btn-acao,
+            .filtros,
+            .accessibility-controls,
+            .modal-overlay {
+                display: none !important;
+            }
+            
+            .lista {
+                max-height: none;
+                overflow: visible;
+            }
+            
+            .lista-item {
+                break-inside: avoid;
+                border: 1px solid #000 !important;
+                color: #000 !important;
+                background: white !important;
+            }
+            
+            .item-nome {
+                color: #000 !important;
+            }
+            
+            .badge {
+                border: 1px solid #000 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="app">
+        <section class="card">
+            <header class="header">
+                <div class="header-title">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-shopping-basket"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h1>Lista Fácil</h1>
+                            <span class="subtitle">Organize suas compras</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="theme-toggle" id="btn-theme">
+                    <span class="theme-icon sun"><i class="fas fa-sun"></i></span>
+                    <span class="theme-icon moon"><i class="fas fa-moon"></i></span>
+                </div>
+            </header>
+
+            <form id="form-compra" class="form">
+                <div class="form-group">
+                    <label for="item-nome"><i class="fas fa-tag"></i> Item</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-pencil-alt input-icon"></i>
+                        <input type="text" id="item-nome" placeholder="O que você precisa comprar?" autocomplete="off" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="item-quantidade"><i class="fas fa-box"></i> Quantidade</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-hashtag input-icon"></i>
+                            <input type="number" id="item-quantidade" min="1" value="1" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-preco"><i class="fas fa-dollar-sign"></i> Preço (R$)</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-money-bill-wave input-icon"></i>
+                            <input type="number" id="item-preco" min="0" step="0.01" value="0" />
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" id="btn-adicionar">
+                    <i class="fas fa-plus-circle"></i> Adicionar item
+                </button>
+            </form>
+
+            <section class="lista-container">
+                <div class="lista-header">
+                    <h2><i class="fas fa-list"></i> Itens da Lista</h2>
+                    <div class="filtros">
+                        <button class="chip-filtro ativo" data-filtro="todos" type="button">
+                            Todos
+                        </button>
+                        <button class="chip-filtro" data-filtro="pendentes" type="button">
+                            Pendentes
+                        </button>
+                        <button class="chip-filtro" data-filtro="comprados" type="button">
+                            Comprados
+                        </button>
+                    </div>
+                </div>
+
+                <div class="ordenacao-container">
+                    <select id="ordenacao">
+                        <option value="data-desc">Mais recentes</option>
+                        <option value="nome-asc">Nome (A-Z)</option>
+                        <option value="nome-desc">Nome (Z-A)</option>
+                        <option value="qtd-asc">Quantidade (↑)</option>
+                        <option value="qtd-desc">Quantidade (↓)</option>
+                        <option value="preco-asc">Preço (↑)</option>
+                        <option value="preco-desc">Preço (↓)</option>
+                    </select>
+                </div>
+
+                <ul id="lista-itens" class="lista"></ul>
+                
+                <div id="mensagem-vazia" class="mensagem-vazia">
+                    <i class="fas fa-clipboard-list"></i>
+                    <p>Sua lista está vazia. Adicione itens para começar!</p>
+                </div>
+            </section>
+
+            <section class="rodape">
+                <div class="rodape-linha">
+                    <span id="texto-resumo" class="resumo-info">
+                        0 itens (0 pendentes, 0 comprados)
+                    </span>
+                    <div class="acoes-resumo">
+                        <button id="btn-limpar-comprados" class="btn-texto" type="button">
+                            <i class="fas fa-trash-alt"></i> Limpar comprados
+                        </button>
+                        <button id="btn-exportar-pdf" class="btn-texto" type="button">
+                            <i class="fas fa-file-pdf"></i> Exportar PDF
+                        </button>
+                    </div>
+                </div>
+
+                <div class="total-container">
+                    <button id="btn-calcular-total" class="btn-total" type="button">
+                        <i class="fas fa-calculator"></i> Calcular total
+                    </button>
+                    <span id="texto-total" class="texto-total">R$ 0,00</span>
+                </div>
+
+                <div class="importacao">
+                    <label for="input-importar"><i class="fas fa-file-import"></i> Importar lista</label>
+                    <div class="file-input-container">
+                        <div class="file-input-wrapper">
+                            <input type="file" id="input-importar" accept=".json" />
+                            <div class="file-input-display">
+                                <i class="fas fa-file-code"></i>
+                                <span id="file-name">Selecione um arquivo JSON</span>
+                            </div>
+                        </div>
+                        <button id="btn-importar" class="btn-texto" type="button">
+                            <i class="fas fa-upload"></i> Importar
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </section>
+        
+        <!-- Toast para mensagens gerais -->
+        <div id="toast" class="toast"></div>
+        
+        <!-- Controles de acessibilidade -->
+        <div class="accessibility-controls">
+            <button id="btn-increase-font" class="accessibility-btn" title="Aumentar tamanho da fonte">
+                <i class="fas fa-text-height"></i>
+            </button>
+            <button id="btn-decrease-font" class="accessibility-btn" title="Diminuir tamanho da fonte">
+                <i class="fas fa-text-width"></i>
+            </button>
+            <button id="btn-high-contrast" class="accessibility-btn" title="Alto contraste">
+                <i class="fas fa-adjust"></i>
+            </button>
+        </div>
+        
+        <!-- Modal de confirmação personalizado -->
+        <div id="modal-confirm" class="modal-overlay">
+            <div class="modal">
+                <div class="modal-header">
+                    <div class="modal-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3 class="modal-title" id="modal-confirm-title">Confirmação</h3>
+                </div>
+                <div class="modal-content" id="modal-confirm-content">
+                    Tem certeza que deseja realizar esta ação?
+                </div>
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-cancel" id="modal-confirm-cancel">Cancelar</button>
+                    <button class="modal-btn modal-btn-confirm" id="modal-confirm-ok">Confirmar</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal de alerta personalizado -->
+        <div id="modal-alert" class="modal-overlay">
+            <div class="modal">
+                <div class="modal-header">
+                    <div class="modal-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <h3 class="modal-title" id="modal-alert-title">Informação</h3>
+                </div>
+                <div class="modal-content" id="modal-alert-content">
+                    Esta é uma mensagem de alerta.
+                </div>
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-confirm" id="modal-alert-ok">OK</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal de entrada personalizado -->
+        <div id="modal-prompt" class="modal-overlay">
+            <div class="modal">
+                <div class="modal-header">
+                    <div class="modal-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3 class="modal-title" id="modal-prompt-title">Editar Item</h3>
+                </div>
+                <div class="modal-content">
+                    <div class="modal-input-group">
+                        <label class="modal-input-label" id="modal-prompt-label">Digite o novo valor:</label>
+                        <input type="text" class="modal-input" id="modal-prompt-input" autocomplete="off">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-cancel" id="modal-prompt-cancel">Cancelar</button>
+                    <button class="modal-btn modal-btn-confirm" id="modal-prompt-ok">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // O JavaScript permanece exatamente o mesmo da versão anterior
+        const STORAGE_KEY = "lista-compras-contraste-corrigido";
+
+        /**
+         * @typedef {{id:number;nome:string;quantidade:number;preco:number;comprado:boolean;criadoEm:string;}} ItemLista
+         */
+
+        /** @type {ItemLista[]} */
+        let itens = [];
+
+        // Elementos do DOM
+        const form = document.getElementById("form-compra");
+        const inputNome = document.getElementById("item-nome");
+        const inputQuantidade = document.getElementById("item-quantidade");
+        const inputPreco = document.getElementById("item-preco");
+        const btnAdicionar = document.getElementById("btn-adicionar");
+        const listaElement = document.getElementById("lista-itens");
+        const mensagemVazia = document.getElementById("mensagem-vazia");
+        const ordenacao = document.getElementById("ordenacao");
+        const textoResumo = document.getElementById("texto-resumo");
+        const btnLimparComprados = document.getElementById("btn-limpar-comprados");
+        const btnCalcularTotal = document.getElementById("btn-calcular-total");
+        const textoTotal = document.getElementById("texto-total");
+        const inputImportar = document.getElementById("input-importar");
+        const btnImportar = document.getElementById("btn-importar");
+        const btnExportarPDF = document.getElementById("btn-exportar-pdf");
+        const filtroChips = Array.from(document.querySelectorAll(".chip-filtro"));
+        const btnTheme = document.getElementById("btn-theme");
+        const fileNameDisplay = document.getElementById("file-name");
+        const toast = document.getElementById("toast");
+        const btnIncreaseFont = document.getElementById("btn-increase-font");
+        const btnDecreaseFont = document.getElementById("btn-decrease-font");
+        const btnHighContrast = document.getElementById("btn-high-contrast");
+
+        // Elementos dos modais personalizados
+        const modalConfirm = document.getElementById("modal-confirm");
+        const modalConfirmTitle = document.getElementById("modal-confirm-title");
+        const modalConfirmContent = document.getElementById("modal-confirm-content");
+        const modalConfirmCancel = document.getElementById("modal-confirm-cancel");
+        const modalConfirmOk = document.getElementById("modal-confirm-ok");
+        
+        const modalAlert = document.getElementById("modal-alert");
+        const modalAlertTitle = document.getElementById("modal-alert-title");
+        const modalAlertContent = document.getElementById("modal-alert-content");
+        const modalAlertOk = document.getElementById("modal-alert-ok");
+        
+        const modalPrompt = document.getElementById("modal-prompt");
+        const modalPromptTitle = document.getElementById("modal-prompt-title");
+        const modalPromptLabel = document.getElementById("modal-prompt-label");
+        const modalPromptInput = document.getElementById("modal-prompt-input");
+        const modalPromptCancel = document.getElementById("modal-prompt-cancel");
+        const modalPromptOk = document.getElementById("modal-prompt-ok");
+
+        let filtroAtual = "todos";
+        let editandoItemId = null;
+        let fontSize = 16;
+        let highContrastMode = false;
+
+        // Sistema de modais personalizados
+        function showConfirmModal(message, title = "Confirmação") {
+            return new Promise((resolve) => {
+                modalConfirmTitle.textContent = title;
+                modalConfirmContent.textContent = message;
+                modalConfirm.classList.add("active");
+                
+                setTimeout(() => modalConfirmCancel.focus(), 100);
+                
+                const handleConfirm = () => {
+                    cleanup();
+                    resolve(true);
+                };
+                
+                const handleCancel = () => {
+                    cleanup();
+                    resolve(false);
+                };
+                
+                const handleKeyDown = (e) => {
+                    if (e.key === "Escape") {
+                        handleCancel();
+                    } else if (e.key === "Enter" && document.activeElement === modalConfirmOk) {
+                        handleConfirm();
+                    }
+                };
+                
+                const cleanup = () => {
+                    modalConfirm.classList.remove("active");
+                    modalConfirmOk.removeEventListener("click", handleConfirm);
+                    modalConfirmCancel.removeEventListener("click", handleCancel);
+                    document.removeEventListener("keydown", handleKeyDown);
+                };
+                
+                modalConfirmOk.addEventListener("click", handleConfirm);
+                modalConfirmCancel.addEventListener("click", handleCancel);
+                document.addEventListener("keydown", handleKeyDown);
+            });
+        }
+
+        function showAlertModal(message, title = "Informação") {
+            return new Promise((resolve) => {
+                modalAlertTitle.textContent = title;
+                modalAlertContent.textContent = message;
+                modalAlert.classList.add("active");
+                
+                setTimeout(() => modalAlertOk.focus(), 100);
+                
+                const handleOk = () => {
+                    cleanup();
+                    resolve();
+                };
+                
+                const handleKeyDown = (e) => {
+                    if (e.key === "Escape" || e.key === "Enter") {
+                        handleOk();
+                    }
+                };
+                
+                const cleanup = () => {
+                    modalAlert.classList.remove("active");
+                    modalAlertOk.removeEventListener("click", handleOk);
+                    document.removeEventListener("keydown", handleKeyDown);
+                };
+                
+                modalAlertOk.addEventListener("click", handleOk);
+                document.addEventListener("keydown", handleKeyDown);
+            });
+        }
+
+        function showPromptModal(message, defaultValue = "", title = "Entrada") {
+            return new Promise((resolve) => {
+                modalPromptTitle.textContent = title;
+                modalPromptLabel.textContent = message;
+                modalPromptInput.value = defaultValue;
+                modalPrompt.classList.add("active");
+                
+                setTimeout(() => {
+                    modalPromptInput.focus();
+                    modalPromptInput.select();
+                }, 100);
+                
+                const handleConfirm = () => {
+                    const value = modalPromptInput.value.trim();
+                    cleanup();
+                    resolve(value);
+                };
+                
+                const handleCancel = () => {
+                    cleanup();
+                    resolve(null);
+                };
+                
+                const handleKeyDown = (e) => {
+                    if (e.key === "Escape") {
+                        handleCancel();
+                    } else if (e.key === "Enter") {
+                        handleConfirm();
+                    }
+                };
+                
+                const cleanup = () => {
+                    modalPrompt.classList.remove("active");
+                    modalPromptOk.removeEventListener("click", handleConfirm);
+                    modalPromptCancel.removeEventListener("click", handleCancel);
+                    document.removeEventListener("keydown", handleKeyDown);
+                };
+                
+                modalPromptOk.addEventListener("click", handleConfirm);
+                modalPromptCancel.addEventListener("click", handleCancel);
+                document.addEventListener("keydown", handleKeyDown);
+            });
+        }
+
+        // Sistema de notificações toast
+        function mostrarToast(mensagem, tipo = "info") {
+            toast.textContent = mensagem;
+            toast.className = "toast";
+            
+            if (tipo === "sucesso") {
+                toast.style.background = "linear-gradient(135deg, #909320, #125a44)";
+                toast.style.color = "#ffffff";
+            } else if (tipo === "erro") {
+                toast.style.background = "linear-gradient(135deg, #a83232, #5a1212)";
+                toast.style.color = "#ffffff";
+            } else if (tipo === "aviso") {
+                toast.style.background = "linear-gradient(135deg, #fea304, #d48800)";
+                toast.style.color = "#ffffff";
+            }
+            
+            toast.classList.add("show");
+            
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000);
+        }
+
+        // Ajustar tamanho da fonte
+        function ajustarTamanhoFonte(incremento) {
+            fontSize += incremento;
+            if (fontSize < 12) fontSize = 12;
+            if (fontSize > 24) fontSize = 24;
+            
+            document.documentElement.style.fontSize = `${fontSize}px`;
+            mostrarToast(`Tamanho da fonte: ${fontSize}px`, "sucesso");
+        }
+
+        // Alternar modo alto contraste
+        function alternarAltoContraste() {
+            highContrastMode = !highContrastMode;
+            
+            if (highContrastMode) {
+                document.body.classList.add("high-contrast-mode");
+                mostrarToast("Modo alto contraste ativado", "sucesso");
+            } else {
+                document.body.classList.remove("high-contrast-mode");
+                mostrarToast("Modo alto contraste desativado", "sucesso");
+            }
+            
+            localStorage.setItem("lista-compras-alto-contraste", highContrastMode);
+        }
+
+        // Carregar e salvar dados
+        function salvarNoStorage() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(itens));
+        }
+
+        function carregarDoStorage() {
+            const bruto = localStorage.getItem(STORAGE_KEY);
+            if (!bruto) {
+                itens = [];
+                return;
+            }
+            try {
+                const dados = JSON.parse(bruto);
+                itens = Array.isArray(dados) ? dados : [];
+            } catch {
+                itens = [];
+                mostrarToast("Erro ao carregar dados salvos", "erro");
+            }
+        }
+
+        // Aplicar filtros e ordenação
+        function aplicarFiltroEOrdenacao(lista) {
+            let resultado = [...lista];
+
+            if (filtroAtual === "pendentes") {
+                resultado = resultado.filter((i) => !i.comprado);
+            } else if (filtroAtual === "comprados") {
+                resultado = resultado.filter((i) => i.comprado);
+            }
+
+            const ord = ordenacao.value;
+            resultado.sort((a, b) => {
+                switch (ord) {
+                    case "nome-asc":
+                        return a.nome.localeCompare(b.nome);
+                    case "nome-desc":
+                        return b.nome.localeCompare(a.nome);
+                    case "qtd-asc":
+                        return a.quantidade - b.quantidade;
+                    case "qtd-desc":
+                        return b.quantidade - a.quantidade;
+                    case "preco-asc":
+                        return a.preco - b.preco;
+                    case "preco-desc":
+                        return b.preco - a.preco;
+                    case "data-asc":
+                        return new Date(a.criadoEm) - new Date(b.criadoEm);
+                    case "data-desc":
+                    default:
+                        return new Date(b.criadoEm) - new Date(a.criadoEm);
+                }
+            });
+
+            return resultado;
+        }
+
+        // Atualizar resumo
+        function atualizarResumo() {
+            const total = itens.length;
+            const comprados = itens.filter((i) => i.comprado).length;
+            const pendentes = total - comprados;
+            textoResumo.textContent = `${total} itens (${pendentes} pendentes, ${comprados} comprados)`;
+        }
+
+        // Renderizar lista
+        function renderizarLista() {
+            listaElement.innerHTML = "";
+
+            const visiveis = aplicarFiltroEOrdenacao(itens);
+
+            mensagemVazia.style.display = visiveis.length ? "none" : "flex";
+
+            visiveis.forEach((item) => {
+                const li = document.createElement("li");
+                li.className = "lista-item";
+                if (item.comprado) li.classList.add("comprado");
+
+                const esquerda = document.createElement("div");
+                esquerda.className = "item-esquerda";
+
+                const checkboxContainer = document.createElement("div");
+                checkboxContainer.className = "item-checkbox";
+                checkboxContainer.addEventListener("click", () => {
+                    toggleComprado(item.id);
+                });
+
+                const checkIcon = document.createElement("i");
+                checkIcon.className = "fas fa-check";
+                checkboxContainer.appendChild(checkIcon);
+
+                const infoContainer = document.createElement("div");
+                infoContainer.className = "item-info";
+
+                const nomeElement = document.createElement("div");
+                nomeElement.className = "item-nome";
+                nomeElement.textContent = item.nome;
+
+                const detalhesContainer = document.createElement("div");
+                detalhesContainer.className = "item-detalhes";
+
+                const badgeQtd = document.createElement("div");
+                badgeQtd.className = "badge badge-quantidade";
+                badgeQtd.innerHTML = `<i class="fas fa-box"></i> ${item.quantidade}`;
+
+                const badgePreco = document.createElement("div");
+                badgePreco.className = "badge badge-preco";
+                badgePreco.innerHTML = `<i class="fas fa-dollar-sign"></i> ${item.preco.toFixed(2)}`;
+
+                detalhesContainer.appendChild(badgeQtd);
+                detalhesContainer.appendChild(badgePreco);
+
+                infoContainer.appendChild(nomeElement);
+                infoContainer.appendChild(detalhesContainer);
+
+                esquerda.appendChild(checkboxContainer);
+                esquerda.appendChild(infoContainer);
+
+                const direita = document.createElement("div");
+                direita.className = "item-direita";
+
+                const btnEditar = document.createElement("button");
+                btnEditar.type = "button";
+                btnEditar.className = "btn-acao btn-editar";
+                btnEditar.innerHTML = '<i class="fas fa-edit"></i>';
+                btnEditar.title = "Editar item";
+                btnEditar.addEventListener("click", async () => {
+                    await editarItemInline(item.id);
+                });
+
+                const btnToggle = document.createElement("button");
+                btnToggle.type = "button";
+                btnToggle.className = "btn-acao btn-toggle";
+                btnToggle.innerHTML = item.comprado ? '<i class="fas fa-undo"></i>' : '<i class="fas fa-check"></i>';
+                btnToggle.title = item.comprado ? "Marcar como pendente" : "Marcar como comprado";
+                btnToggle.addEventListener("click", () => {
+                    toggleComprado(item.id);
+                });
+
+                const btnRemover = document.createElement("button");
+                btnRemover.type = "button";
+                btnRemover.className = "btn-acao btn-remover";
+                btnRemover.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                btnRemover.title = "Remover item";
+                btnRemover.addEventListener("click", async () => {
+                    await removerItem(item.id);
+                });
+
+                direita.appendChild(btnEditar);
+                direita.appendChild(btnToggle);
+                direita.appendChild(btnRemover);
+
+                li.appendChild(esquerda);
+                li.appendChild(direita);
+
+                listaElement.appendChild(li);
+            });
+
+            atualizarResumo();
+        }
+
+        // Adicionar item
+        function adicionarItem(nome, quantidade, preco) {
+            if (editandoItemId !== null) {
+                itens = itens.map((item) =>
+                    item.id === editandoItemId
+                        ? { ...item, nome, quantidade, preco }
+                        : item
+                );
+                editandoItemId = null;
+                btnAdicionar.innerHTML = '<i class="fas fa-plus-circle"></i> Adicionar item';
+                mostrarToast("Item atualizado com sucesso!", "sucesso");
+            } else {
+                const novoItem = {
+                    id: Date.now() + Math.random(),
+                    nome,
+                    quantidade,
+                    preco,
+                    comprado: false,
+                    criadoEm: new Date().toISOString(),
+                };
+                itens.push(novoItem);
+                mostrarToast("Item adicionado com sucesso!", "sucesso");
+            }
+            
+            salvarNoStorage();
+            renderizarLista();
+        }
+
+        // Alternar status de comprado
+        function toggleComprado(id) {
+            const item = itens.find((i) => i.id === id);
+            if (!item) return;
+            
+            itens = itens.map((item) =>
+                item.id === id ? { ...item, comprado: !item.comprado } : item
+            );
+            salvarNoStorage();
+            renderizarLista();
+            
+            const status = itens.find((i) => i.id === id).comprado ? "comprado" : "pendente";
+            mostrarToast(`Item marcado como ${status}`, "sucesso");
+        }
+
+        // Remover item
+        async function removerItem(id) {
+            const confirmado = await showConfirmModal(
+                "Tem certeza que deseja remover este item da lista?",
+                "Remover Item"
+            );
+            
+            if (!confirmado) return;
+            
+            itens = itens.filter((item) => item.id !== id);
+            salvarNoStorage();
+            renderizarLista();
+            mostrarToast("Item removido com sucesso!", "sucesso");
+            textoTotal.textContent = "R$ 0,00";
+        }
+
+        // Editar item inline
+        async function editarItemInline(id) {
+            const item = itens.find((i) => i.id === id);
+            if (!item) return;
+
+            const novoNome = await showPromptModal(
+                "Novo nome do item:",
+                item.nome,
+                "Editar Nome do Item"
+            );
+            
+            if (novoNome === null) return;
+            if (!novoNome.trim()) {
+                await showAlertModal("O nome do item não pode ficar vazio.", "Aviso");
+                return;
+            }
+
+            const novaQtdStr = await showPromptModal(
+                "Nova quantidade:",
+                String(item.quantidade),
+                "Editar Quantidade"
+            );
+            
+            if (novaQtdStr === null) return;
+            const novaQtd = Number(novaQtdStr);
+            if (Number.isNaN(novaQtd) || novaQtd < 1) {
+                await showAlertModal("Quantidade inválida. Deve ser um número maior que zero.", "Aviso");
+                return;
+            }
+
+            const novoPrecoStr = await showPromptModal(
+                "Novo preço (R$):",
+                item.preco.toFixed(2),
+                "Editar Preço"
+            );
+            
+            if (novoPrecoStr === null) return;
+            const novoPreco = Number(novoPrecoStr.replace(",", "."));
+            if (Number.isNaN(novoPreco) || novoPreco < 0) {
+                await showAlertModal("Preço inválido. Deve ser um número maior ou igual a zero.", "Aviso");
+                return;
+            }
+
+            itens = itens.map((i) =>
+                i.id === id
+                    ? {
+                        ...i,
+                        nome: novoNome.trim(),
+                        quantidade: novaQtd,
+                        preco: novoPreco,
+                    }
+                    : i
+            );
+            salvarNoStorage();
+            renderizarLista();
+            mostrarToast("Item atualizado com sucesso!", "sucesso");
+        }
+
+        // Atualizar estado do botão de adicionar
+        function atualizarEstadoBotao() {
+            const nomeValido = inputNome.value.trim().length > 0;
+            const qtd = Number(inputQuantidade.value);
+            const qtdValida = !Number.isNaN(qtd) && qtd >= 1;
+            const preco = Number(inputPreco.value);
+            const precoValido = !Number.isNaN(preco) && preco >= 0;
+
+            btnAdicionar.disabled = !(nomeValido && qtdValida && precoValido);
+        }
+
+        // Limpar itens comprados
+        async function limparComprados() {
+            const comprados = itens.filter((i) => i.comprado).length;
+            if (comprados === 0) {
+                await showAlertModal("Não há itens comprados para limpar.", "Aviso");
+                return;
+            }
+            
+            const confirmado = await showConfirmModal(
+                `Remover ${comprados} item(ns) marcado(s) como comprado(s)? Esta ação não pode ser desfeita.`,
+                "Limpar Itens Comprados"
+            );
+            
+            if (!confirmado) return;
+            
+            itens = itens.filter((i) => !i.comprado);
+            salvarNoStorage();
+            renderizarLista();
+            textoTotal.textContent = "R$ 0,00";
+            mostrarToast(`${comprados} item(ns) comprado(s) removido(s)`, "sucesso");
+        }
+
+        // Calcular total dos pendentes
+        async function calcularTotalPendentes() {
+            const pendentes = itens.filter((i) => !i.comprado);
+            if (pendentes.length === 0) {
+                await showAlertModal("Não há itens pendentes para calcular.", "Aviso");
+                textoTotal.textContent = "R$ 0,00";
+                return;
+            }
+            
+            const confirmado = await showConfirmModal(
+                "Calcular o total apenas dos itens pendentes? (preços x quantidades)",
+                "Calcular Total"
+            );
+            
+            if (!confirmado) return;
+            
+            const total = pendentes.reduce((acc, i) => acc + i.preco * i.quantidade, 0);
+            textoTotal.textContent = `R$ ${total.toFixed(2)}`;
+            mostrarToast(`Total dos ${pendentes.length} item(ns) pendentes: R$ ${total.toFixed(2)}`, "sucesso");
+        }
+
+        // Importar JSON
+        async function importarJSON() {
+            if (!inputImportar.files || inputImportar.files.length === 0) {
+                await showAlertModal("Selecione um arquivo JSON primeiro.", "Aviso");
+                return;
+            }
+
+            const arquivo = inputImportar.files[0];
+            const reader = new FileReader();
+
+            reader.onload = async () => {
+                try {
+                    const conteudo = reader.result;
+                    const dados = JSON.parse(conteudo);
+
+                    if (!Array.isArray(dados)) {
+                        await showAlertModal("Formato inválido: esperado um array de itens.", "Erro");
+                        return;
+                    }
+
+                    const novos = dados
+                        .map((raw, index) => {
+                            const nome = String(raw.nome || "").trim();
+                            const quantidade = Number(raw.quantidade ?? 1);
+                            const preco = Number(raw.preco ?? 0);
+                            const comprado = Boolean(raw.comprado);
+
+                            if (!nome) {
+                                console.warn(`Item ${index} ignorado: nome vazio`);
+                                return null;
+                            }
+
+                            if (Number.isNaN(quantidade) || quantidade < 1) {
+                                console.warn(`Item "${nome}" ignorado: quantidade inválida`);
+                                return null;
+                            }
+
+                            return {
+                                id: Date.now() + Math.random() + index,
+                                nome,
+                                quantidade,
+                                preco: Number.isNaN(preco) || preco < 0 ? 0 : preco,
+                                comprado,
+                                criadoEm: new Date().toISOString(),
+                            };
+                        })
+                        .filter((x) => x !== null);
+
+                    if (novos.length === 0) {
+                        await showAlertModal("Nenhum item válido encontrado no arquivo.", "Erro");
+                        return;
+                    }
+
+                    const substituir = await showConfirmModal(
+                        `Encontrados ${novos.length} item(ns) válido(s). Deseja substituir a lista atual pelos itens importados? (Cancelar = adicionar aos existentes)`,
+                        "Importar Lista"
+                    );
+
+                    if (substituir) {
+                        itens = novos;
+                        mostrarToast(`Lista substituída com ${novos.length} itens importados`, "sucesso");
+                    } else {
+                        itens = itens.concat(novos);
+                        mostrarToast(`${novos.length} itens adicionados à lista existente`, "sucesso");
+                    }
+
+                    salvarNoStorage();
+                    renderizarLista();
+                    textoTotal.textContent = "R$ 0,00";
+                    
+                    // Limpar input de arquivo
+                    inputImportar.value = "";
+                    fileNameDisplay.textContent = "Selecione um arquivo JSON";
+                } catch (e) {
+                    await showAlertModal("Erro ao ler o arquivo. Verifique se é JSON válido.", "Erro");
+                    console.error(e);
+                }
+            };
+
+            reader.readAsText(arquivo, "utf-8");
+        }
+
+        // Alternar tema claro/escuro
+        function alternarTema() {
+            const html = document.documentElement;
+            const temaAtual = html.getAttribute("data-theme") || "light";
+            const novoTema = temaAtual === "light" ? "dark" : "light";
+            html.setAttribute("data-theme", novoTema);
+            
+            localStorage.setItem("lista-compras-tema", novoTema);
+            
+            mostrarToast(novoTema === "light" ? "Tema claro ativado" : "Tema escuro ativado", "sucesso");
+        }
+
+        // Exportar PDF (usando print)
+        async function exportarPDF() {
+            if (itens.length === 0) {
+                await showAlertModal("A lista está vazia. Adicione itens antes de exportar.", "Aviso");
+                return;
+            }
+            
+            const confirmado = await showConfirmModal(
+                "Gerar versão em PDF da lista atual? A lista será formatada para impressão.",
+                "Exportar PDF"
+            );
+            
+            if (!confirmado) return;
+            
+            window.print();
+            mostrarToast("Preparando lista para impressão/PDF...", "sucesso");
+        }
+
+        // Inicialização
+        function init() {
+            const temaSalvo = localStorage.getItem("lista-compras-tema");
+            if (temaSalvo) {
+                document.documentElement.setAttribute("data-theme", temaSalvo);
+            }
+            
+            const contrasteSalvo = localStorage.getItem("lista-compras-alto-contraste");
+            if (contrasteSalvo === "true") {
+                highContrastMode = true;
+                document.body.classList.add("high-contrast-mode");
+            }
+            
+            carregarDoStorage();
+            renderizarLista();
+            atualizarEstadoBotao();
+            
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+                const nome = inputNome.value.trim();
+                const quantidade = Number(inputQuantidade.value);
+                const preco = Number(inputPreco.value);
+                
+                if (!nome || Number.isNaN(quantidade) || quantidade < 1) {
+                    showAlertModal("Preencha todos os campos corretamente", "Erro");
+                    return;
+                }
+                
+                if (Number.isNaN(preco) || preco < 0) {
+                    showAlertModal("Preço inválido", "Erro");
+                    return;
+                }
+
+                adicionarItem(nome, quantidade, preco);
+                
+                if (editandoItemId === null) {
+                    inputNome.value = "";
+                    inputQuantidade.value = "1";
+                    inputPreco.value = "0";
+                }
+                
+                inputNome.focus();
+                textoTotal.textContent = "R$ 0,00";
+                atualizarEstadoBotao();
+            });
+
+            inputNome.addEventListener("input", atualizarEstadoBotao);
+            inputQuantidade.addEventListener("input", atualizarEstadoBotao);
+            inputPreco.addEventListener("input", atualizarEstadoBotao);
+            ordenacao.addEventListener("change", renderizarLista);
+
+            filtroChips.forEach((chip) => {
+                chip.addEventListener("click", () => {
+                    filtroChips.forEach((c) => c.classList.remove("ativo"));
+                    chip.classList.add("ativo");
+                    filtroAtual = chip.getAttribute("data-filtro") || "todos";
+                    renderizarLista();
+                });
+            });
+
+            btnLimparComprados.addEventListener("click", limparComprados);
+            btnCalcularTotal.addEventListener("click", calcularTotalPendentes);
+            
+            btnImportar.addEventListener("click", (e) => {
+                e.preventDefault();
+                importarJSON();
+            });
+            
+            inputImportar.addEventListener("change", function() {
+                if (this.files.length > 0) {
+                    fileNameDisplay.textContent = this.files[0].name;
+                } else {
+                    fileNameDisplay.textContent = "Selecione um arquivo JSON";
+                }
+            });
+            
+            btnExportarPDF.addEventListener("click", exportarPDF);
+            btnTheme.addEventListener("click", alternarTema);
+            
+            btnIncreaseFont.addEventListener("click", () => ajustarTamanhoFonte(1));
+            btnDecreaseFont.addEventListener("click", () => ajustarTamanhoFonte(-1));
+            btnHighContrast.addEventListener("click", alternarAltoContraste);
+            
+            setTimeout(() => {
+                if (itens.length === 0) {
+                    mostrarToast("Bem-vindo ao Lista Fácil - Organize suas compras!", "sucesso");
+                }
+            }, 1000);
+        }
+
+        document.addEventListener("DOMContentLoaded", init);
+    </script>
+</body>
+</html>
