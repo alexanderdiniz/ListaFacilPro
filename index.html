@@ -596,11 +596,15 @@
             margin-top: 24px;
         }
 
+        /* ========================================== */
+        /* CORREÇÃO DO CABEÇALHO DA LISTA - LAYOUT RESPONSIVO */
+        /* ========================================== */
         .lista-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column; /* Alterado para coluna em dispositivos móveis */
+            gap: 12px; /* Espaço entre título e filtros */
             margin-bottom: 15px;
+            width: 100%;
         }
 
         .lista-header h2 {
@@ -611,6 +615,7 @@
             align-items: center;
             gap: 8px;
             color: var(--text-main);
+            width: 100%;
         }
 
         .filtros {
@@ -620,6 +625,9 @@
             padding: 5px;
             border-radius: var(--radius-sm);
             border: 1px solid var(--border);
+            width: 100%;
+            justify-content: center; /* Centraliza os filtros */
+            flex-wrap: wrap; /* Permite quebra de linha se necessário */
         }
 
         .chip-filtro {
@@ -632,6 +640,7 @@
             color: var(--text-muted);
             cursor: pointer;
             transition: var(--transition);
+            white-space: nowrap; /* Impede quebra de texto nos botões */
         }
 
         .chip-filtro.ativo {
@@ -644,6 +653,7 @@
         .ordenacao-container {
             margin-bottom: 15px;
             position: relative;
+            width: 100%;
         }
 
         #ordenacao {
@@ -788,6 +798,7 @@
         .item-detalhes {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap; /* Permite quebra de linha se necessário */
         }
 
         .badge {
@@ -799,6 +810,7 @@
             align-items: center;
             gap: 4px;
             border: 1px solid;
+            white-space: nowrap; /* Impede quebra de texto nas badges */
         }
 
         .badge-quantidade {
@@ -817,6 +829,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-shrink: 0; /* Impede que os botões encolham */
         }
 
         .btn-acao {
@@ -832,6 +845,7 @@
             font-size: 0.9rem;
             color: white;
             font-weight: 600;
+            flex-shrink: 0; /* Impede que os botões encolham */
         }
 
         .btn-acao:hover {
@@ -876,6 +890,7 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
+            width: 100%;
         }
 
         .rodape-linha {
@@ -883,17 +898,21 @@
             justify-content: space-between;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap; /* Permite quebra de linha se necessário */
+            width: 100%;
         }
 
         .resumo-info {
             color: var(--text-main);
             font-size: 0.85rem;
             font-weight: 600;
+            white-space: nowrap; /* Impede quebra de texto */
         }
 
         .acoes-resumo {
             display: flex;
             gap: 8px;
+            flex-wrap: wrap; /* Permite quebra de linha se necessário */
         }
 
         .btn-texto {
@@ -909,6 +928,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            white-space: nowrap; /* Impede quebra de texto */
         }
 
         .btn-texto:hover {
@@ -927,6 +947,9 @@
             border: 1px solid var(--color1);
             position: relative;
             overflow: hidden;
+            width: 100%;
+            flex-wrap: wrap; /* Permite quebra de linha se necessário */
+            gap: 10px;
         }
 
         .total-container::before {
@@ -953,6 +976,7 @@
             align-items: center;
             gap: 8px;
             box-shadow: 0 4px 10px rgba(254, 163, 4, 0.3);
+            white-space: nowrap; /* Impede quebra de texto */
         }
 
         .btn-total:hover {
@@ -965,6 +989,7 @@
             font-size: 1.4rem;
             font-weight: 700;
             color: var(--color1);
+            white-space: nowrap; /* Impede quebra de texto */
         }
 
         .importacao {
@@ -973,6 +998,7 @@
             gap: 10px;
             padding-top: 16px;
             border-top: 1px dashed var(--border);
+            width: 100%;
         }
 
         .importacao label {
@@ -984,11 +1010,14 @@
             display: flex;
             gap: 10px;
             align-items: center;
+            flex-wrap: wrap; /* Permite quebra de linha se necessário */
+            width: 100%;
         }
 
         .file-input-wrapper {
             position: relative;
             flex: 1;
+            min-width: 200px; /* Largura mínima para o input de arquivo */
         }
 
         .file-input-wrapper input[type="file"] {
@@ -1012,6 +1041,7 @@
             align-items: center;
             gap: 10px;
             transition: var(--transition);
+            width: 100%;
         }
 
         .file-input-wrapper:hover .file-input-display {
@@ -1117,6 +1147,22 @@
             --gray-light-4: #666666;
         }
 
+        /* ========================================== */
+        /* MEDIA QUERIES PARA RESPONSIVIDADE */
+        /* ========================================== */
+        @media (min-width: 400px) {
+            .lista-header {
+                flex-direction: row; /* Volta para linha em telas maiores */
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .filtros {
+                width: auto; /* Largura automática em telas maiores */
+                justify-content: flex-end; /* Alinha à direita */
+            }
+        }
+
         @media (max-width: 500px) {
             .app {
                 padding: 15px;
@@ -1156,6 +1202,69 @@
             
             .modal-btn {
                 width: 100%;
+            }
+            
+            /* Ajustes específicos para telas muito pequenas */
+            .lista-header h2 {
+                font-size: 1.2rem; /* Tamanho de fonte reduzido */
+            }
+            
+            .chip-filtro {
+                padding: 6px 10px; /* Padding reduzido */
+                font-size: 0.7rem; /* Fonte reduzida */
+            }
+            
+            .total-container {
+                flex-direction: column; /* Botão e total em coluna */
+                align-items: stretch; /* Estica os elementos */
+                gap: 12px;
+            }
+            
+            .btn-total, .texto-total {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .file-input-wrapper {
+                min-width: 150px; /* Largura mínima reduzida */
+            }
+        }
+
+        @media (max-width: 350px) {
+            .lista-header {
+                gap: 8px;
+            }
+            
+            .lista-header h2 {
+                font-size: 1.1rem;
+            }
+            
+            .filtros {
+                padding: 3px;
+                gap: 3px;
+            }
+            
+            .chip-filtro {
+                padding: 5px 8px;
+                font-size: 0.65rem;
+            }
+            
+            .rodape-linha {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .acoes-resumo {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .btn-texto {
+                flex: 1;
+                justify-content: center;
+                padding: 8px 12px;
             }
         }
 
@@ -2172,5 +2281,4 @@
         document.addEventListener("DOMContentLoaded", init);
     </script>
 </body>
-
-</html>
+    </html>
